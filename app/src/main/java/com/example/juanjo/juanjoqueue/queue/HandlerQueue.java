@@ -4,7 +4,7 @@ import android.os.Handler;
 import android.os.HandlerThread;
 import android.os.Message;
 
-import java.util.concurrent.ConcurrentLinkedQueue;
+import java.util.concurrent.LinkedBlockingQueue;
 
 /**
  * Created by juanjo on 27/11/15.
@@ -14,7 +14,7 @@ public class HandlerQueue extends HandlerThread implements Queue {
     private static final String TAG = HandlerQueue.class.getSimpleName();
     //    private static BlockingQueue<Command> sPoolWorkQueue =
 //            new ArrayBlockingQueue<Command>(10);
-    private static java.util.Queue<Command> sPoolWorkQueue = new ConcurrentLinkedQueue<>();
+    private static java.util.Queue<Command> sPoolWorkQueue = new LinkedBlockingQueue<>();
 
 
     private boolean inAction;
@@ -30,9 +30,8 @@ public class HandlerQueue extends HandlerThread implements Queue {
     @Override
     public long add(Command action) {
         synchronized (this) {
-            Command command = sPoolWorkQueue.poll();
-            command.onPrepare();
-            workerHandler.obtainMessage(0, command).sendToTarget();
+            sPoolWorkQueue.add(action);
+            scheduleNext();
         }
         return 0L;
     }
@@ -53,6 +52,12 @@ public class HandlerQueue extends HandlerThread implements Queue {
                             @Override
                             public void run() {
                                 command.onFinalize();
+                                try {
+                                    System.out.println("=> sleeping ");
+                                    Thread.sleep(500);
+                                } catch (InterruptedException e) {
+                                    e.printStackTrace();
+                                }
                                 inAction = false;
                                 scheduleNext();
                             }

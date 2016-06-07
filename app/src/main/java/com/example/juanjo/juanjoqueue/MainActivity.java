@@ -15,10 +15,11 @@ import java.util.Random;
 public class MainActivity extends AppCompatActivity {
 
     Queue queue;
-    int total = 0;
 
     TextView result;
     Random rnd;
+
+    int i;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -31,22 +32,23 @@ public class MainActivity extends AppCompatActivity {
 
         rnd = new Random();
 
-
         for (int i = 0; i < 100; i++) {
             new Thread(new Runnable() {
                 @Override
                 public void run() {
-                                        int x = (int) (rnd.nextDouble() * 2  + 1);
+                    int x = (int) (rnd.nextDouble() * 10 + 1);
                     if (x % 2 == 0) {
-                        queue.add(add((int) (rnd.nextDouble() * 6 + 1)));
+                        queue.add(createAddCommand(x));
                     }
                 }
             }).start();
         }
     }
 
-    private Command add(final double number) {
-        return new Add(result);
+    private Command createAddCommand(final int number) {
+
+        System.out.println("=>" + number);
+        return new Add(number, result);
     }
 
 //    private Command remove(final double number) {

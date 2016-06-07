@@ -10,25 +10,27 @@ import com.example.juanjo.juanjoqueue.queue.Command;
 public class Add implements Command {
 
     TextView mTextview;
+    int id;
 
-    public Add(TextView result) {
+    public Add(int id, TextView result) {
         mTextview = result;
+        this.id = id;
     }
 
     @Override
     public void onPrepare() {
-        System.out.println("=> onPrepare");
+        System.out.println("=> onPrepare " + id);
     }
 
     @Override
     public void onExecute() {
-        System.out.println("=> onExecute");
+        System.out.println("=> onExecute " + id);
 
     }
 
     @Override
     public void onFinalize() {
-        System.out.println("=> onFinalize");
-        mTextview.setText("onFinalize");
+        System.out.println("=> onFinalize " + id);
+        mTextview.setText("onFinalize " + id);
     }
 }
