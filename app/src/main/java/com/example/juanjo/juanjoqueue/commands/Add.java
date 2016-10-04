@@ -22,16 +22,17 @@ public class Add implements Command {
    }
 
    @Override public void onFinalize() {
-      System.out.println("=> onFinalize " + items);
-      mTextview.setText("onFinalize " + items);
+      System.out.println("=> onFinalize " + items.get(0));
+      mTextview.setText("onFinalize " + items.get(0));
    }
 
    @Override public Command call() throws Exception {
-      System.out.println("=> onExecute " + items);
+      System.out.println("=> onExecute " + items.get(0));
+      Thread.sleep(2000);
       return this;
    }
 
-   public TextView getmTextview() {
+   public TextView getTextview() {
       return mTextview;
    }
 
