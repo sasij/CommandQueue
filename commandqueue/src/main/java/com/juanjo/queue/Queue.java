@@ -1,4 +1,4 @@
-package com.example.juanjo.juanjoqueue.queue;
+package com.juanjo.queue;
 
 /**
  * Created by juanjo on 27/11/15.

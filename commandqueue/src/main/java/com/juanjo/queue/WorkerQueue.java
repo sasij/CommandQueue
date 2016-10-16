@@ -1,6 +1,5 @@
-package com.example.juanjo.juanjoqueue.queue;
+package com.juanjo.queue;
 
-import android.os.Handler;
 import java.util.concurrent.BlockingQueue;
 import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Future;
@@ -14,10 +13,10 @@ public class WorkerQueue<T extends Command> implements Queue<T> {
 
    private volatile BlockingQueue<T> queue = new LinkedBlockingQueue<>();
    private final ExecutorService executorService;
-   private final Handler uiThread;
+   private final UIExecutor uiThread;
    private boolean inAction;
 
-   public WorkerQueue(ExecutorService executorService, Handler uiThread) {
+   public WorkerQueue(ExecutorService executorService, UIExecutor uiThread) {
       this.executorService = executorService;
       this.uiThread = uiThread;
    }
@@ -53,7 +52,7 @@ public class WorkerQueue<T extends Command> implements Queue<T> {
 
             final Future<T> finalFuture = future;
 
-            uiThread.post(new Runnable() {
+            uiThread.execute(new Runnable() {
                @Override public void run() {
                   try {
                      finalFuture.get().onFinalize();

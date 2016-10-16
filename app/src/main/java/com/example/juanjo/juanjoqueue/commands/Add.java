@@ -1,7 +1,7 @@
 package com.example.juanjo.juanjoqueue.commands;
 
 import android.widget.TextView;
-import com.example.juanjo.juanjoqueue.queue.Command;
+import com.juanjo.queue.Command;
 import java.util.List;
 
 /**

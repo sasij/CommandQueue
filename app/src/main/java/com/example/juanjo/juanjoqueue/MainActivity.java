@@ -7,16 +7,14 @@ import android.view.View;
 import android.widget.Button;
 import android.widget.TextView;
 import com.example.juanjo.juanjoqueue.commands.Add;
-import com.example.juanjo.juanjoqueue.queue.Command;
-import com.example.juanjo.juanjoqueue.queue.Queue;
-import com.example.juanjo.juanjoqueue.queue.WorkerQueue;
+import com.juanjo.queue.WorkerQueue;
 import java.util.Arrays;
 import java.util.Random;
 import java.util.concurrent.Executors;
 
 public class MainActivity extends AppCompatActivity {
 
-   Queue queue;
+   com.juanjo.queue.Queue queue;
 
    TextView result;
    Random rnd;
@@ -31,10 +29,11 @@ public class MainActivity extends AppCompatActivity {
             createTask();
          }
       });
-      queue = new WorkerQueue(Executors.newSingleThreadExecutor(), new Handler());
+      queue =
+          new WorkerQueue(Executors.newSingleThreadExecutor(), new UIExecutorImp(new Handler()));
    }
 
-   private Command createAddCommand(final int x, int y, int z) {
+   private com.juanjo.queue.Command createAddCommand(final int x, int y, int z) {
       System.out.println("=>" + x);
       return new Add(Arrays.asList(x, y, z), result);
    }

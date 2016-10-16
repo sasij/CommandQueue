@@ -1,4 +1,4 @@
-package com.example.juanjo.juanjoqueue.queue;
+package com.juanjo.queue;
 
 import java.util.concurrent.Callable;
 
