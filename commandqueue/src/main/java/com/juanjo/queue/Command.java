@@ -7,7 +7,5 @@ import java.util.concurrent.Callable;
  */
 public interface Command extends Callable {
 
-   void onPrepare();
-
-   void onFinalize();
+  void onFinalize();
 }
